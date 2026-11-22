@@ -1,0 +1,29 @@
+# Dependency directories
+node_modules/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Uploads and ephemeral file storage
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System and editor metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Complaints - Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout" id="studentListView">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#94a3b8;font-weight:normal;">Student Area</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="submit-complaint.html" class="nav-link">
+          <span>✍️</span> Submit Complaint
+        </a>
+        <a href="my-complaints.html" class="nav-link active">
+          <span>📂</span> My Complaints
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="page-title">My Filed Grievances</div>
+        <div class="user-profile-badge">
+          <div class="user-avatar">S</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Student</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <div id="listAlert"></div>
+
+        <div class="card">
+          <div class="card-header" style="flex-wrap: wrap; gap: 12px;">
+            <h2>Grievance Records</h2>
+            <a href="submit-complaint.html" class="btn btn-primary btn-sm">+ New Complaint</a>
+          </div>
+
+          <div class="card-body">
+            <!-- Filter Toolbar -->
+            <div class="toolbar">
+              <div class="search-input-wrapper">
+                <input 
+                  type="text" 
+                  id="searchInput" 
+                  class="form-control" 
+                  placeholder="Search by Tracking ID or Title..."
+                >
+              </div>
+
+              <div style="min-width: 180px;">
+                <select id="statusFilter" class="form-control">
+                  <option value="All">All Statuses</option>
+                  <option value="Submitted">Submitted</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Complaints Data Table -->
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tracking ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Submitted On</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="complaintsTableBody">
+                  <tr>
+                    <td colspan="7" class="empty-state">
+                      <div class="spinner"></div>
+                      <p>Loading complaints...</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>

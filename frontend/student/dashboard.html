@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout" id="studentDashboardView">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#94a3b8;font-weight:normal;">Student Area</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link active">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="submit-complaint.html" class="nav-link">
+          <span>✍️</span> Submit Complaint
+        </a>
+        <a href="my-complaints.html" class="nav-link">
+          <span>📂</span> My Complaints
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="page-title">Student Dashboard</div>
+        <div class="user-profile-badge">
+          <div class="user-avatar">S</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Student</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <div id="dashboardAlert"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <div>
+            <h1 style="font-size: 22px;">Welcome, <span class="user-name">Student</span> 👋</h1>
+            <p style="color: var(--text-muted); font-size: 14px;">Here is the current status of your submitted college grievances.</p>
+          </div>
+          <a href="submit-complaint.html" class="btn btn-primary">+ Submit Grievance</a>
+        </div>
+
+        <!-- Metric KPI Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Total Filed</span>
+            <span class="metric-value" id="metricTotal">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid var(--accent);">
+            <span class="metric-label">Submitted</span>
+            <span class="metric-value" id="metricSubmitted">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid #a855f7;">
+            <span class="metric-label">Under Review</span>
+            <span class="metric-value" id="metricReview">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid #f59e0b;">
+            <span class="metric-label">In Progress</span>
+            <span class="metric-value" id="metricProgress">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid #10b981;">
+            <span class="metric-label">Resolved</span>
+            <span class="metric-value" id="metricResolved">0</span>
+          </div>
+        </div>
+
+        <!-- Recent Complaints Table -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Recent Grievances</h2>
+            <a href="my-complaints.html" class="btn btn-secondary btn-sm">View All</a>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tracking ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Submitted On</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="recentComplaintsTable">
+                  <tr>
+                    <td colspan="7" class="empty-state">
+                      <div class="spinner"></div>
+                      <p>Loading complaints...</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>

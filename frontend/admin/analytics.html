@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics & Reports - Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <style>
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .chart-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .chart-card-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .chart-canvas-container {
+      position: relative;
+      flex: 1;
+      min-height: 280px;
+      max-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 900px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout" id="adminAnalyticsView">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon" style="background:#dc2626;">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#f87171;font-weight:600;">Admin Control</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="complaints.html" class="nav-link">
+          <span>📂</span> Manage Complaints
+        </a>
+        <a href="analytics.html" class="nav-link active">
+          <span>📈</span> Analytics
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="page-title">Grievance Analytics & Reports</div>
+        <div class="user-profile-badge">
+          <div class="user-avatar" style="background:#fee2e2;color:#b91c1c;">A</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Administrator</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <div id="analyticsAlert"></div>
+
+        <!-- Filter Controls Toolbar -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-body" style="padding: 16px 20px;">
+            <div class="toolbar" style="margin-bottom: 0;">
+              <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+                <span>🔍 Filter Reports:</span>
+              </div>
+
+              <div style="min-width: 150px;">
+                <select id="analyticsCategoryFilter" class="form-control">
+                  <option value="">All Categories</option>
+                </select>
+              </div>
+
+              <div style="min-width: 140px;">
+                <select id="analyticsStatusFilter" class="form-control">
+                  <option value="All">All Statuses</option>
+                  <option value="Submitted">Submitted</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              <div style="min-width: 130px;">
+                <select id="analyticsYearFilter" class="form-control">
+                  <option value="">All Years</option>
+                  <option value="2026" selected>2026</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+
+              <button id="resetFiltersBtn" class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Core Performance KPI Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Total Volume</span>
+            <span class="metric-value" id="kpiTotal">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid #10b981;">
+            <span class="metric-label">Resolved</span>
+            <span class="metric-value" id="kpiResolved" style="color: #065f46;">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid #f59e0b;">
+            <span class="metric-label">Pending Action</span>
+            <span class="metric-value" id="kpiUnresolved" style="color: #b45309;">0</span>
+          </div>
+          <div class="metric-card" style="border-left: 4px solid var(--accent);">
+            <span class="metric-label">Resolution Rate</span>
+            <span class="metric-value" id="kpiResolutionRate">0%</span>
+          </div>
+        </div>
+
+        <!-- 2x2 Visualizations Grid -->
+        <div class="charts-grid">
+          <!-- 1. Doughnut: Complaints by Status -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h2>Complaints by Status</h2>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="statusChart"></canvas>
+            </div>
+          </div>
+
+          <!-- 2. Bar: Complaints by Category -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h2>Complaints by Category</h2>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="categoryChart"></canvas>
+            </div>
+          </div>
+
+          <!-- 3. Pie/Doughnut: Complaints by Priority -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h2>Priority Breakdown</h2>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="priorityChart"></canvas>
+            </div>
+          </div>
+
+          <!-- 4. Line: Monthly Complaint Trends -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h2>Monthly Submission & Resolution Trends</h2>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="trendsChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Load Local Chart.js Bundle -->
+  <script src="/js/chart.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/analytics.js"></script>
+</body>
+</html>

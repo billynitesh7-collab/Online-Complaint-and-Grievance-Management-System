@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Complaints - Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout" id="adminComplaintsView">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon" style="background:#dc2626;">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#f87171;font-weight:600;">Admin Control</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="complaints.html" class="nav-link active">
+          <span>📂</span> Manage Complaints
+        </a>
+        <a href="analytics.html" class="nav-link">
+          <span>📈</span> Analytics
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="page-title">Complaint Management</div>
+        <div class="user-profile-badge">
+          <div class="user-avatar" style="background:#fee2e2;color:#b91c1c;">A</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Administrator</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <div id="adminListAlert"></div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>All Student Complaints</h2>
+          </div>
+
+          <div class="card-body">
+            <!-- Multi-Filter & Search Toolbar -->
+            <div class="toolbar">
+              <div class="search-input-wrapper" style="min-width: 260px;">
+                <input 
+                  type="text" 
+                  id="searchInput" 
+                  class="form-control" 
+                  placeholder="Search Tracking ID or Title..."
+                >
+              </div>
+
+              <div style="min-width: 140px;">
+                <select id="statusFilter" class="form-control">
+                  <option value="All">All Statuses</option>
+                  <option value="Submitted">Submitted</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+
+              <div style="min-width: 150px;">
+                <select id="categoryFilter" class="form-control">
+                  <option value="">All Categories</option>
+                </select>
+              </div>
+
+              <div style="min-width: 130px;">
+                <select id="priorityFilter" class="form-control">
+                  <option value="All">All Priorities</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Urgent">Urgent</option>
+                </select>
+              </div>
+
+              <div style="min-width: 130px;">
+                <select id="sortSelect" class="form-control">
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Complaints Data Table -->
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tracking ID</th>
+                    <th>Student Info</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Submitted On</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="complaintsTableBody">
+                  <tr>
+                    <td colspan="8" class="empty-state">
+                      <div class="spinner"></div>
+                      <p>Loading complaints...</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div id="paginationContainer" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

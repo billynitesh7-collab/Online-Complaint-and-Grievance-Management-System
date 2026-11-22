@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Grievance Details - Admin Portal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout" id="adminDetailsView">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon" style="background:#dc2626;">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#f87171;font-weight:600;">Admin Control</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="complaints.html" class="nav-link active">
+          <span>📂</span> Manage Complaints
+        </a>
+        <a href="analytics.html" class="nav-link">
+          <span>📈</span> Analytics
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <a href="complaints.html" class="btn btn-secondary btn-sm">← Back to List</a>
+          <div class="page-title">Complaint Review & Action</div>
+        </div>
+        <div class="user-profile-badge">
+          <div class="user-avatar" style="background:#fee2e2;color:#b91c1c;">A</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Administrator</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container">
+        <div id="adminDetailsAlert"></div>
+        <div id="actionAlert"></div>
+
+        <!-- Header Card -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Tracking Number</div>
+              <div id="trackingIdHeader" style="font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px;">
+                Loading...
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <div id="priorityBadgeContainer"></div>
+              <div id="statusBadgeContainer"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-grid">
+          <!-- Left Column: Details, Attachments & Response List -->
+          <div>
+            <!-- Student & Grievance Overview -->
+            <div class="card">
+              <div class="card-header">
+                <h2>Complaint Overview</h2>
+              </div>
+              <div class="card-body">
+                <div class="meta-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                  <div class="meta-item">
+                    <div class="meta-label">Student Name</div>
+                    <div class="meta-val" id="studentName">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Email Address</div>
+                    <div class="meta-val" id="studentEmail">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Roll Number</div>
+                    <div class="meta-val" id="studentRoll">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Department</div>
+                    <div class="meta-val" id="studentDept">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Category</div>
+                    <div class="meta-val" id="detailCategory">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Submitted On</div>
+                    <div class="meta-val" id="detailSubmittedDate">—</div>
+                  </div>
+                  <div class="meta-item">
+                    <div class="meta-label">Last Updated</div>
+                    <div class="meta-val" id="detailUpdatedDate">—</div>
+                  </div>
+                </div>
+
+                <div class="details-section">
+                  <h3>Subject</h3>
+                  <div id="detailTitle" style="font-size: 16px; font-weight: 600; color: var(--text-main); margin-bottom: 16px;">
+                    Loading...
+                  </div>
+
+                  <h3>Description</h3>
+                  <div id="detailDescription" style="font-size: 14px; line-height: 1.6; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                    Loading...
+                  </div>
+                </div>
+
+                <div class="details-section" style="margin-top: 24px;">
+                  <h3>Supporting Documents</h3>
+                  <div id="attachmentsContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <!-- Attachment chips populated via JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Existing Responses -->
+            <div class="card">
+              <div class="card-header">
+                <h2>Official Administrative Communications</h2>
+              </div>
+              <div class="card-body" id="responsesContainer">
+                <!-- Response cards populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Administrative Actions & Timeline -->
+          <div>
+            <!-- Action 1: Update Status -->
+            <div class="card" style="border-top: 4px solid var(--accent);">
+              <div class="card-header">
+                <h2>Update Status</h2>
+              </div>
+              <div class="card-body">
+                <form id="updateStatusForm" novalidate>
+                  <div class="form-group">
+                    <label for="newStatusSelect" class="form-label">New Status <span class="req">*</span></label>
+                    <select id="newStatusSelect" class="form-control" required>
+                      <option value="Submitted">Submitted</option>
+                      <option value="Under Review">Under Review</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Resolved">Resolved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="statusRemarks" class="form-label">Audit Remarks</label>
+                    <textarea 
+                      id="statusRemarks" 
+                      class="form-control" 
+                      rows="3" 
+                      placeholder="Reason or notes regarding this status change (recorded in audit log)..."
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block">Apply Status Update</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Action 2: Send Official Response -->
+            <div class="card" style="border-top: 4px solid #10b981;">
+              <div class="card-header">
+                <h2>Send Official Response</h2>
+              </div>
+              <div class="card-body">
+                <form id="sendResponseForm" novalidate>
+                  <div class="form-group">
+                    <label for="responseMessage" class="form-label">Response Message <span class="req">*</span></label>
+                    <textarea 
+                      id="responseMessage" 
+                      class="form-control" 
+                      rows="4" 
+                      placeholder="Type the official message to the student regarding investigation findings or resolution instructions..." 
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-secondary btn-block" style="background:#10b981;color:#ffffff;border:none;">
+                    Send Official Response
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Investigation Timeline -->
+            <div class="card">
+              <div class="card-header">
+                <h2>Investigation Timeline</h2>
+              </div>
+              <div class="card-body">
+                <div class="timeline" id="timelineContainer">
+                  <!-- Timeline items populated via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

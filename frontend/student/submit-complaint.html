@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Complaint - Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout" id="studentSubmitView">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">🏛️</div>
+        <div class="brand-title">Grievance Portal<br><small style="color:#94a3b8;font-weight:normal;">Student Area</small></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="submit-complaint.html" class="nav-link active">
+          <span>✍️</span> Submit Complaint
+        </a>
+        <a href="my-complaints.html" class="nav-link">
+          <span>📂</span> My Complaints
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="logout-btn">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="page-title">Submit Grievance</div>
+        <div class="user-profile-badge">
+          <div class="user-avatar">S</div>
+          <div class="user-details">
+            <div class="user-name">Loading...</div>
+            <div class="user-meta">Student</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-container" style="max-width: 860px;">
+        <div id="submitAlert"></div>
+
+        <!-- Success Notification Card (Hidden initially) -->
+        <div id="submissionSuccessCard" class="card" style="display: none; border-color: #a7f3d0; background-color: #f0fdf4;">
+          <div class="card-body" style="text-align: center; padding: 40px 24px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">✅</div>
+            <h2 style="font-size: 22px; color: #065f46; margin-bottom: 8px;">Grievance Lodged Successfully!</h2>
+            <p style="color: #047857; margin-bottom: 20px;">
+              Your complaint has been registered in the system with initial status <strong>Submitted</strong>.
+            </p>
+            <div style="background: #ffffff; border: 2px dashed #059669; padding: 16px; border-radius: var(--radius-sm); max-width: 380px; margin: 0 auto 24px auto;">
+              <div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">OFFICIAL TRACKING ID</div>
+              <div id="createdTrackingId" style="font-size: 22px; font-weight: 800; color: var(--primary); letter-spacing: 1px; margin-top: 4px;">
+                GRV-XXXXXXXX
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+              <a id="viewDetailsBtn" href="#" class="btn btn-primary">View Complaint Details</a>
+              <a href="dashboard.html" class="btn btn-secondary">Go to Dashboard</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission Form Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Grievance Submission Form</h2>
+          </div>
+          <div class="card-body">
+            <form id="submitComplaintForm" novalidate>
+              <div class="form-group">
+                <label for="title" class="form-label">Grievance Title <span class="req">*</span></label>
+                <input 
+                  type="text" 
+                  id="title" 
+                  class="form-control" 
+                  placeholder="Concise summary of the grievance (e.g., Projector malfunction in Room 302)" 
+                  required
+                >
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                  <label for="categorySelect" class="form-label">Category <span class="req">*</span></label>
+                  <select id="categorySelect" class="form-control" required>
+                    <option value="">Loading categories...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="prioritySelect" class="form-label">Priority <span class="req">*</span></label>
+                  <select id="prioritySelect" class="form-control" required>
+                    <option value="Low">Low - Minor inconvenience</option>
+                    <option value="Medium" selected>Medium - Normal concern</option>
+                    <option value="High">High - Impedes academic/living activities</option>
+                    <option value="Urgent">Urgent - Safety, health, or critical disruption</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="description" class="form-label">Detailed Description <span class="req">*</span></label>
+                <textarea 
+                  id="description" 
+                  class="form-control" 
+                  rows="6" 
+                  placeholder="Provide comprehensive details: location, dates, individuals or equipment involved, and any steps already taken."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="attachments" class="form-label">
+                  Supporting Attachments <small style="color:var(--text-muted);font-weight:normal;">(Optional - PDF, JPG, PNG up to 3 files, 5 MB max each)</small>
+                </label>
+                <input 
+                  type="file" 
+                  id="attachments" 
+                  class="form-control" 
+                  multiple 
+                  accept=".pdf,.jpg,.jpeg,.png"
+                >
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+                  Files are validated for authentic binary signatures and stored securely.
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+                <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit Grievance</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/student.js"></script>
+</body>
+</html>

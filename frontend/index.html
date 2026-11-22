@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Complaint & Grievance Management System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .hero-section {
+      max-width: 900px;
+      margin: 60px auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero-title {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+    .action-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+      text-align: left;
+    }
+    .action-card {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .action-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .action-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .action-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="public-header">
+    <a href="/" class="brand">
+      <div class="brand-icon">🏛️</div>
+      <span>College Grievance Portal</span>
+    </a>
+    <nav class="public-nav">
+      <a href="/login.html" class="btn btn-secondary">Student Login</a>
+      <a href="/register.html" class="btn btn-primary">Register</a>
+    </nav>
+  </header>
+
+  <main class="hero-section">
+    <h1 class="hero-title">Online Complaint & Grievance Management System</h1>
+    <p class="hero-subtitle">
+      A centralized, transparent, and responsive platform empowering students to report campus issues, 
+      track investigation status in real time, and receive direct official resolutions.
+    </p>
+
+    <div class="action-cards">
+      <div class="action-card">
+        <div class="action-icon">📝</div>
+        <h3>Student Portal</h3>
+        <p>Lodge grievances regarding academics, hostel, campus infrastructure, or accounts with supporting documents.</p>
+        <a href="/login.html" class="btn btn-primary btn-block">Access Student Dashboard</a>
+      </div>
+
+      <div class="action-card">
+        <div class="action-icon">🔒</div>
+        <h3>Administrative Review</h3>
+        <p>College administrators review, prioritize, assign, and post official progress updates with an immutable audit log.</p>
+        <a href="/login.html" class="btn btn-secondary btn-block">Administrator Login</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="public-footer">
+    <p>&copy; 2026 College Grievance & Complaint Management System • Mini Project</p>
+  </footer>
+
+  <script src="/js/api.js"></script>
+</body>
+</html>
